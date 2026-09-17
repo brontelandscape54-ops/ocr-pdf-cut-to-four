@@ -256,3 +256,40 @@ python3 split_pdf.py --help
 特に、非公開の商用製品への組込みなど、AGPLの条件に適合しない形でPyMuPDFを利用する場合は、PyMuPDF提供元の商用ライセンスが必要となる可能性があります。利用者自身で最新のライセンス条件を確認してください。
 
 SPDX-License-Identifier: AGPL-3.0-or-later
+
+## Repositoryの位置づけと後継開発
+
+このrepositoryは、OCR前処理用の小型・固定4分割CLIとして作成されたものです。
+
+現在、より一般化されたPDF前処理・編集ツールは、別repositoryの `pdf-workbench` で開発しています。
+
+```text
+brontelandscape54-ops/pdf-workbench
+```
+
+`pdf-workbench` は、このrepositoryの4分割crop / split処理を概念的な出発点として、次の方向へ拡張したものです。
+
+- GUIでPDFを確認しながら分割位置を調整
+- ページごとに異なる分割設定を保持
+- 分割なし / 上下2分割 / 4分割を選択
+- 分割線をドラッグして調整
+- 全ページへの一括設定とページ単位の個別設定を併用
+- 将来的なページ回転・削除・並べ替え・crop・結合等への拡張
+
+ただし、`pdf-workbench` はこのGit repositoryの履歴をそのまま継承したものではありません。
+
+両者の関係は、Git上のliteral descendantというより、
+
+```text
+ocr-pdf-cut-to-four
+    小型・固定4分割CLI
+        ↓ conceptual starting point / predecessor
+pdf-workbench
+    GUI・ページ別設定を備えた発展系
+```
+
+と整理します。
+
+このため、本repositoryを削除・統合するのではなく、目的の明確な小型4分割CLIおよび開発史上のpredecessorとして保持します。
+
+新しい一般機能の開発は原則として `pdf-workbench` 側で進め、本repositoryには4分割CLIとして必要な保守だけを行う方針です。
