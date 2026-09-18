@@ -293,3 +293,97 @@ pdf-workbench
 このため、本repositoryを削除・統合するのではなく、目的の明確な小型4分割CLIおよび開発史上のpredecessorとして保持します。
 
 新しい一般機能の開発は原則として `pdf-workbench` 側で進め、本repositoryには4分割CLIとして必要な保守だけを行う方針です。
+
+## Git管理開始前のhistorical source snapshots
+
+このrepositoryには、Git管理開始前の開発段階を示すlocal-only資料として、
+`過去データ/` が残っている。
+
+2026-09-19の監査で確認した内容は次の通りである。
+
+- `過去データ/split_pdf.py`
+  - modified: 2026-05-19 20:35:47 +0900
+  - SHA-256: `9e38f213f0412373649c53f5a83e1c8ec69128d048901d973d8076d0cf70c34e`
+- `過去データ/split_pdf copy.py`
+  - modified: 2026-05-19 20:56:30 +0900
+  - SHA-256: `5ffd30ef038c6e0cf392f1fdf2e72452a0a392a8204e1ce3891caf4658672357`
+
+現在のGit履歴で最初に確認できる `split_pdf.py` は、
+
+```text
+commit:
+3fc2e796831fe26e08e3d054d6effc174142d950
+
+date:
+2026-05-20 09:02:08 +0900
+
+subject:
+Initial OCR PDF cut-to-four tool
+```
+
+である。
+
+監査時点では、`過去データ/` の2 fileはいずれも
+repositoryの全Git履歴中にbyte-exactなblob matchを持たず、
+現在trackedされている `split_pdf.py` ともSHA-256が異なっていた。
+
+したがって、この2 fileは、
+
+```text
+unique local historical evidence
+/
+pre-Git source snapshots
+```
+
+として扱う。
+
+ただし、この証拠だけから、
+2 fileのどちらかが最初のtracked implementationへ
+直接変化したものであるとは断定しない。
+
+### Off-device preservation
+
+実物bytesは、local working repositoryとは別に、
+Dropbox preservation sparse mirrorへ保存した。
+
+```text
+projects0316-preservation/
+└── projects0316/
+    └── ocr-pdf-cut-to-four/
+        ├── 過去データ/
+        ├── PRESERVATION_SHA256_20260919.txt
+        ├── PRESERVATION_CONTEXT_20260919.md
+        └── CLOUD_VERIFICATION_20260919.md
+```
+
+preservation manifestのSHA-256は、
+
+```text
+e942f1878723edc0465df151dd6c60abbf88a7792a794f1f8a575a5c5c7e1e8e
+```
+
+である。
+
+保存時には、
+
+- source payload 2 filesのSHA-256を確認;
+- Dropbox local preservation copyをsource manifestに対してbyte-levelで全件確認;
+- Dropbox cloud側でpayload 2 files、manifest、semantic contextの存在を確認;
+- cloud verification record自体もDropbox server側への同期を確認;
+
+した。
+
+Dropbox cloud上のpayloadを別途すべて再downloadし、
+SHA-256を再計算したわけではない。
+
+このverification boundaryのもとで、
+projects0316のcurated preservation policy上は、
+
+```text
+off-device preservation verified
+```
+
+として扱う。
+
+`過去データ/` の元fileは、
+このpreservation作業によって削除・変更していない。
