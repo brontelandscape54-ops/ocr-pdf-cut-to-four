@@ -385,5 +385,25 @@ off-device preservation verified
 
 として扱う。
 
-`過去データ/` の元fileは、
-このpreservation作業によって削除・変更していない。
+preservation完了後も、監査および削除直前verificationのため、
+`過去データ/` の元fileは一時的にlocal working repositoryへ残していた。
+
+2026-09-19、次を再確認したうえで、
+active repository内の `過去データ/` をretireした。
+
+- source filesetが `split_pdf.py` と `split_pdf copy.py` の2 filesだけであること;
+- source 2 filesがpreservation manifestとSHA-256一致すること;
+- Dropbox local preservation copy 2 filesも同じmanifestとSHA-256一致すること;
+- preservation contextおよびcloud verification recordが存在すること;
+- 本READMEにhistorical roleとoff-device preservationの記録が残っていること;
+- repositoryのtracked stateがcleanで、local `main` と `origin/main` が同期していること。
+
+削除後にもDropbox preservation copyを再検証し、
+2 filesともmanifestとSHA-256一致することを確認した。
+
+したがって現在、Git管理開始前のhistorical source snapshotsの実物bytesは
+active working repositoryには置かず、
+semantic provenanceとともにoff-device preservation copyで保持している。
+
+このretirementはhistorical evidenceの破棄ではなく、
+active workspaceとhistorical preservationの役割を分離するための整理である。
